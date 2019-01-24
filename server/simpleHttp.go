@@ -7,11 +7,18 @@ import (
 )
 
 func responder(respuesta http.ResponseWriter, solicitud *http.Request) {
-	current_time := time.Now().Local()
-	fmt.Fprintf(respuesta, "Hola, la fecha actual es "+current_time.Format("2006-01-02"))
+	currentTime := time.Now().Local()
+	fmt.Fprintf(respuesta, "Hola, la fecha actual es "+currentTime.Format("2006-01-02"))
+}
+
+func mostrarHTML(respuesta http.ResponseWriter, solicitud *http.Request) {
+	fmt.Println("quibo")
+	http.ServeFile(respuesta, solicitud, "vue.html")
+	fmt.Println("hola")
 }
 
 func main() {
-	http.HandleFunc("/", responder)
+	http.HandleFunc("/request", responder)
+	http.HandleFunc("/vue", mostrarHTML)
 	http.ListenAndServe(":4000", nil)
 }
