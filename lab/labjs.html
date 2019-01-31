@@ -1,0 +1,118 @@
+<html>
+    <head>
+        <p class="hola mundo" id="texto1">Texto</p>
+        <p id="texto2">Texto 2</p>
+        <p id="texto3">Texto 3</p>
+        <div class="text-nodes">
+            <p>HOla</p>
+            <ul id="lista">
+
+            </ul>
+        </div>
+        <button id="boton1">Click me!</button>
+        <div class="green" id="espacio">
+        </div>
+        <div id="map">
+        </div>
+    </head>
+    <body>
+        <script>
+            const sayHi = () => {
+                console.log("Hi");
+            }
+            sayHi();
+            let l = [1,2,3,4];
+            for (let x of l) {
+                console.log(x);
+            }
+            for (let i = 0; i < l.length; i++) {
+                console.log(l[i]);
+            }
+            for (let y in l) {
+                console.log(`l[${y}] = ${l[y]}`);
+            }
+            let a = {nombre: 'Luis', edad: 20, cansancio: "mucho"}
+            for (let i in a) {
+                console.log(i);
+            }
+            let i = 10;
+            while(i >= 0) {
+                console.log(`numero es ${i--}`);
+            }
+
+            // Part 2
+            let pTags = document.getElementsByTagName('p');
+            let specificTag = document.getElementById('texto1');
+            console.log('Atributo clase es '+specificTag.getAttribute('class'));
+            specificTag.setAttribute('class', 'bum');
+            console.log('Atributo clase es '+specificTag.getAttribute('class'));
+            
+            let text = document.createTextNode('Nuevo text node');
+            document.getElementsByClassName('text-nodes')[0].appendChild(text);
+
+            let newElement = document.createElement('li');
+            newElement.innerHTML = 'Nuevo Li';
+            document.getElementById('lista').appendChild(newElement);
+
+            document.querySelector('#boton1').addEventListener('click', (evt) => {
+                console.log('Me cliquearon');
+            });
+
+            document.querySelector('#espacio').addEventListener('mouseenter', (evt) => {
+                document.querySelector('#espacio').setAttribute('class', 'red')
+            });
+            document.querySelector('#espacio').addEventListener('mouseleave', (evt) => {
+                document.querySelector('#espacio').setAttribute('class', 'green')
+            });
+            document.querySelector('#espacio').addEventListener('mouseenter', (evt) => {
+                console.log('Holaa');
+            });
+
+            const requestinfo = () => {
+                var xhttp = new XMLHttpRequest();
+                xhttp.open('GET', 'somewebsite');
+                xhttp.onload = function() {
+                    if (xhttp.readyState == 4 && xhttp.status == 200) {
+                        // Do something
+                    }
+                }
+                xhttp.send();
+            }
+
+            let map;
+            let marker;
+            function initMap() {
+                    map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: 20.733379, lng: -103.455142},
+                    zoom: 17
+                });
+                marker = new google.maps.Marker({position: {lat: 20.733379, lng: -103.455142}, map: map});
+            }
+            setTimeout(() => {
+                map.setCenter({lat: 20.733379, lng: -102.455142});
+                marker.setMap(null);
+                marker = new google.maps.Marker({position: {lat: 20.733379, lng: -102.455142}, map: map});
+            }, 1000);
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMJMNGtM2sHmZbvw4bdYNV4YtDwvIh-Ts&callback=initMap"
+        async defer></script>
+        <style>
+            #espacio {
+                width: 200px;
+                height: 600px;
+            }
+
+            #map {
+                height: 100%;
+            }
+
+            .green {
+                background-color: green;
+            }
+
+            .red {
+                background-color: red;
+            }
+        </style>
+    </body>
+</html>
