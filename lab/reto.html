@@ -1,0 +1,38 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <input type="text" id="text">
+        <button onclick="addItem()">Add element</button>
+        <ul id="lista">
+
+        </ul>
+        <script>
+            const listItem = (thing) => {
+                let element = document.createElement('li');
+                element.innerHTML = thing;
+                let button = document.createElement('button');
+                button.innerHTML = "Borrar";
+                button.onclick = removeItem;
+                element.appendChild(button);
+                return element;
+            }
+
+            function addItem() {
+                let text = document.querySelector('#text').value;
+                if (text != '') {
+                    console.log(text);
+                    document.querySelector('#lista').appendChild(listItem(text));
+                } else {
+                    alert('Campo no puede estar vacío');
+                }
+            }
+
+            function removeItem(evt) {
+                document.querySelector('#lista').removeChild(evt.target.parentElement);
+            }
+            
+        </script>
+    </body>
+</html>
