@@ -1,0 +1,70 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Citizen Science</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+  </head>
+  	<body>
+        <div id="where">
+            
+        </div>
+
+        <button id="request">Get Go response!</button>
+        <button id="request2">Another!!</button>
+        <button id="request3">Array value!!</button>
+
+    	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+		  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+          <script type="text/javascript">
+          
+          document.getElementById('request').addEventListener('click', (evt) => {
+            getInfo(1);
+          });
+          document.getElementById('request2').addEventListener('click', (evt) => {
+            getInfo(2);
+          });
+          document.getElementById('request3').addEventListener('click', (evt) => {
+            getInfo(3);
+          });
+
+      function getInfo(button)
+      {
+
+        if (window.XMLHttpRequest)
+          {
+            xmlhttp=new XMLHttpRequest();
+          }
+        else
+          {
+          xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+          }
+
+
+
+        xmlhttp.onreadystatechange=function()
+          {
+           //The Loading...function
+          if (xmlhttp.readyState==4 && xmlhttp.status==200)
+            {
+            document.getElementById("where").innerHTML=xmlhttp.responseText;
+            }
+          }
+
+          if (button === 1) {
+            xmlhttp.open("GET","nojson.txt",true);
+          } else if (button === 2){
+            xmlhttp.open("GET","new.txt",true);
+          } else {
+            xmlhttp.open("GET","array",true);
+          }
+          xmlhttp.send();
+      }
+
+
+              </script>
+	</body>
+</html>
