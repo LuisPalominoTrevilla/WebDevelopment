@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -29,6 +30,25 @@ func jsongo(respuesta http.ResponseWriter, solicitud *http.Request) {
 	json.NewEncoder(respuesta).Encode(me)
 }
 
+func showArray(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		r.ParseForm()
+		superArray := [5]string{"Hola", "Mundo", "Como", "Estas"}
+
+		num, _ := strconv.ParseInt(r.FormValue("number"), 10, 64)
+		fmt.Fprint(w, superArray[num])
+	}
+}
+
+func attendForm(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		fmt.Fprintf(w, "Regresar datos")
+	} else if r.Method == "POST" {
+		r.ParseForm()
+		fmt.Fprint(w, r.Form["libro"])
+	}
+}
+
 func mostrarHTML(respuesta http.ResponseWriter, solicitud *http.Request) {
 	fmt.Println("quibo")
 	http.ServeFile(respuesta, solicitud, "ajax_file.html")
@@ -37,10 +57,12 @@ func mostrarHTML(respuesta http.ResponseWriter, solicitud *http.Request) {
 
 func main() {
 	fs := http.FileServer(http.Dir("static"))
-	http.Handle("/", fs)
+	http.Handle("/static/", http.StripPrefix("/static", fs))
 
 	http.HandleFunc("/request", responder)
-	http.HandleFunc("/array", jsongo)
+	http.HandleFunc("/json", jsongo)
+	http.HandleFunc("/login", attendForm)
+	http.HandleFunc("/array", showArray)
 	http.HandleFunc("/vue", mostrarHTML)
 	http.ListenAndServe(":4000", nil)
 }

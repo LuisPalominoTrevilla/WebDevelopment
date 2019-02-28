@@ -14,6 +14,13 @@
         <button id="request">Get Go response!</button>
         <button id="request2">Another!!</button>
         <button id="request3">Array value!!</button>
+        <button id="request4">Send get request</button>
+
+        <form method="POST" action="/array">
+            <label for="name">Number</label>
+            <input type="text" id="name" name="number">
+            <button type="submit">Enviar</button>
+        </form>
 
     	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 		  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
@@ -29,6 +36,9 @@
           });
           document.getElementById('request3').addEventListener('click', (evt) => {
             getInfo(3);
+          });
+          document.getElementById('request4').addEventListener('click', (evt) => {
+            getInfo(4);
           });
 
       function getInfo(button)
@@ -56,10 +66,12 @@
 
           if (button === 1) {
             xmlhttp.open("GET","nojson.txt",true);
-          } else if (button === 2){
+          } else if (button === 2) {
             xmlhttp.open("GET","new.txt",true);
-          } else {
+          } else if (button === 3) {
             xmlhttp.open("GET","array",true);
+          } else {
+            xmlhttp.open("GET","login",true);
           }
           xmlhttp.send();
       }
