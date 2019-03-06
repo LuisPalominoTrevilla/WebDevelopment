@@ -1,0 +1,35 @@
+<html>
+    <head></head>
+    <body>
+        <input type="text" id="lsValue">
+        <button id="save">Guardar en local storage</button>
+        <input id="send" type="button" value="Mandar al server">
+        <script>
+            let idioma = localStorage.getItem("idioma");
+            if (!idioma) {
+                document.querySelector("#send").disabled=true;
+            }else {
+                document.querySelector("#send").disabled=false;
+            }
+
+            document.querySelector("#save").addEventListener("click", (e) => {
+                localStorage.setItem("idioma", document.querySelector("#lsValue").value);
+                idioma = localStorage.getItem("idioma");
+            });
+
+            document.querySelector("#send").addEventListener("click", (e) => {
+                const http = new XMLHttpRequest();
+                
+                http.open('POST', '/sendLs');
+                http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                http.onload = function(response) {
+                    if (http.readyState === 4 && http.status === 200) {
+                        console.log(response.currentTarget.responseText);
+                    }
+                }
+
+                http.send(`idioma=${idioma}`);
+            });
+        </script>
+    </body>
+</html>

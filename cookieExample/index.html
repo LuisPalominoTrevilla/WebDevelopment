@@ -1,0 +1,15 @@
+<html>
+    <head></head>
+    <body>
+        <form action="/setCountry" method="POST">
+            <label for="pais">Escribe tu país</label>
+            <input id="pais" name="country" type="text">
+            <input type="submit">
+        </form>
+        <p id="texto"></p>
+        <script>
+            let cookie = document.cookie;
+            document.querySelector("#texto").innerHTML = `Has seleccionado ${cookie.split("=")[1]}`;
+        </script>
+    </body>
+</html>
