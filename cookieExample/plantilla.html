@@ -4,6 +4,25 @@
     </head>
     <body>
         <p>Hello</p>
-        <p>{{.}}</p>
+
+        {{range .}}
+
+        <div>
+            <label>ID:</label>
+            <input type="text" value="{{.ID}}">
+            <label>Producto:</label>
+            <input type="text" value="{{.Product}}">
+            <label>Descripción:</label>
+            <input type="text" value="{{.Description}}">
+            
+            <label>Precio:</label>
+            {{if .IsFree}}
+            <input type="text" value="$ 0.00">
+            {{else}}
+            <input type="text" value="$ {{.Price}}.00">
+            {{end}}
+        </div>
+
+        {{end}}
     </body>
 </html>
