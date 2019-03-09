@@ -1,0 +1,103 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Citizen Science</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    </head>
+    <body>
+        <div id="lugardetrabajo">
+            {{megustoroma}}
+            {{alumnos}}
+            {{directores}}
+            <div>
+                <h5>Objeto</h5>
+                {{objeto.nombre}}
+                {{objeto.apellido}}
+            </div>
+            <h5>Arreglo de objetos</h5>
+            <ul>
+                <li v-for="person in persons">
+                    {{person.nombre}} {{person.apellido}} edad {{person.edad}}
+                </li>
+            </ul>
+            <h5>JS operation</h5>
+            {{alumnos*10}}
+            <h5>Tabla de personas</h5>
+            <table border=1>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Edad</th>
+                        <th>Mayor de edad?</th>
+                        <th>Facebook</th>
+                    </tr>
+                    <tr v-for="person in persons">
+                        <td @click="showComp(person)">{{person.nombre}}</td>
+                        <td>{{person.apellido}}</td>
+                        <td>{{person.edad}}</td>
+                        <td v-if="person.edad >= 18">SI</td>
+                        <td v-else>NO</td>
+                        <td><a v-bind:href="person.fb">Profile FB</a></td>
+                        <td><button class="btn btn-secondary" @click="changeAge(person, 1)">Agregar edad</button"></td>
+                        <td><button class="btn btn-secondary" @click="changeAge(person, -1)">Quitar edad</button"></td>
+                    </tr>
+            </table>
+            <h5>Nombre mayúsculas</h5>
+            {{uppercaseName}}
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+            <script type="text/javascript">
+            //JS
+            const app = new Vue({
+                el: '#lugardetrabajo',
+                data: {
+                    link: 'http://github.com',
+                    megustoroma: 'no',
+                    alumnos: 17,
+                    directores: ['Del Toro', 'Cuarón', 'Iñárritu'],
+                    objeto: {
+                        nombre: 'Luis',
+                        apellido: 'Palomino'
+                    },
+                    persons: [
+                        {
+                            nombre: 'Luis',
+                            apellido: 'Palomino',
+                            edad: 21,
+                            fb: 'https://www.facebook.com/palominotrevilla'
+                        },
+                        {
+                            nombre: 'Jorge',
+                            apellido: 'Pietra',
+                            edad: 17,
+                            fb: 'https://www.facebook.com/PietraSanta14'
+                        },
+                        {
+                            nombre: 'Dafne',
+                            apellido: 'Medina',
+                            edad: 22,
+                            fb: 'https://www.facebook.com/dafne.medinagarcia'
+                        }
+                    ]
+                },
+                computed: {
+                    uppercaseName() {
+                        return this.objeto.nombre.toUpperCase();
+                    }
+                },
+                methods: {
+                    changeAge(person, inc) {
+                        person.edad+=inc;
+                    },
+                    showComp(person) {
+                        console.log(`Nombre de usuario: ${person.nombre} ${person.apellido}`)
+                    }
+                }
+            });
+            </script>
+    </body>
+</html>
