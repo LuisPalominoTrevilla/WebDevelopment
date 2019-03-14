@@ -1,0 +1,91 @@
+<html>
+    <head>
+        <title>Citizen Science</title>
+        <script
+            src="http://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+        <button onclick="test(2)">Test jQuery</button>
+        <button onclick="test(1)">Test XHR</button>
+        <button onclick="test(3)">Test Fetch</button>
+        <button onclick="test(4)">Test Axios</button>
+
+        <div>
+            <img id="weather-icon" src="" alt="weather icon">
+        </div>
+
+        <script type="text/javascript">
+            let xhr = new XMLHttpRequest();
+            const API_URL = 'da79653f5a5cf0558734cee7b31bd0d7';
+            const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
+
+            let coords = {};
+            navigator.geolocation.getCurrentPosition(pos => {
+                console.log('Ubicación disponible');
+                coords.lat = pos.coords.latitude;
+                coords.lng = pos.coords.longitude;
+            });
+            function test(num) {
+                if (!coords.lat || !coords.lng) {
+                    console.log('Ubicación aún no disponible');
+                    return;
+                }
+                let weatherIcon = 'http://openweathermap.org/img/w/';
+                let url = `${BASE_URL}?lat=${coords.lat}&lon=${coords.lng}&units=metric&lang=es&APPID=${API_URL}`;
+                console.log(url);
+                let start = new Date().getTime();
+                switch (num) {
+                    case 1:
+                        xhr.open("GET", url);
+
+                        xhr.onload = function() {
+                            if (this.status == 200 && this.readyState == 4) {
+                                console.log("XHR method");
+                                console.log(new Date().getTime() - start);
+                                const data = JSON.parse(this.responseText);
+                                weatherIcon+=`${data.weather[0].icon}.png`;
+                                document.querySelector('#weather-icon').setAttribute('src', weatherIcon);
+                            }
+                        }
+
+                        xhr.send();
+                    break;
+                    case 2:
+                        $.getJSON(url, (json) => {
+                            console.log("Jquery method");
+                            console.log(new Date().getTime() - start);
+                            weatherIcon+=`${json.weather[0].icon}.png`;
+                            document.querySelector('#weather-icon').setAttribute('src', weatherIcon);
+                        });
+                    break;
+                    case 3:
+                        fetch(url).then(data => {
+                            return data.json();
+                        })
+                        .then((data) => {
+                            console.log("Fetch method");
+                            console.log(new Date().getTime() - start);
+                            weatherIcon+=`${data.weather[0].icon}.png`;
+                            document.querySelector('#weather-icon').setAttribute('src', weatherIcon);
+                        });
+                    break;
+                    case 4:
+                        axios.get(url)
+                        .then(({data}) => {
+                            console.log("Axios method");
+                            console.log(new Date().getTime() - start);
+                            weatherIcon+=`${data.weather[0].icon}.png`;
+                            document.querySelector('#weather-icon').setAttribute('src', weatherIcon);
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                    break;
+                }
+            }
+        </script>
+    </body>
+</html>
