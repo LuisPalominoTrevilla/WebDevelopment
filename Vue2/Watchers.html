@@ -1,0 +1,79 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Watchers vue</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <style>
+            .container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            #lugardetrabajo {
+                width: 40rem;
+                height: 40rem;
+                display: flex;
+                align-items: center;
+            }
+
+            #lugardetrabajo label {
+                color: white;
+                font-weight: bolder;
+            }
+
+            #lugardetrabajo input {
+                box-shadow: 5px 5px 6px black;
+            }
+
+            #lugardetrabajo div {
+                margin-top: 9rem;
+            }
+
+            body {
+                background-image: url('./money.jpg');
+                background-size: cover;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div id="lugardetrabajo">
+                <div>
+                    <label for="price">Ingresa el precio</label>
+                    <input id="price" type="number" v-model="price">
+                </div>
+                <div>
+                    <label for="iva">Precio con iva</label>
+                    <input disabled id="iva" type="text" v-model="iva">
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+            <script type="text/javascript">
+            //JS
+            const app = new Vue({
+                el: '#lugardetrabajo',
+                data: {
+                    price: 0,
+                    iva: '$ 00.00 MXN'
+                },
+                watch: {
+                    price(newVal) {
+                        let iva;
+                        if (newVal === '') {
+                            iva = `$ 00.00 MXN`;
+                        } else {
+                            iva = `$ ${(newVal * 1.16).toFixed(2)} MXN`;
+                        }
+                        this.iva = iva;
+                    }
+                }
+            });
+            </script>
+    </body>
+</html>
