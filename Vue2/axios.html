@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Watchers vue</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+            <div id="lugardetrabajo">
+                <table border=2>
+                    <tr>
+                        <th>Code</th>
+                        <th>Symbol</th>
+                        <th>Rate</th>
+                        <th>Description</th>
+                        <th>Rate float</th>
+                    </tr>
+                    <tr :key="index" v-for="(bp, index) in bpi">
+                        <td >{{bp.code}}</td>
+                        <td v-html="bp.symbol"></td>
+                        <td>{{bp.rate}}</td>
+                        <td>{{bp.description}}</td>
+                        <td>{{bp.rate_float}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+            <script type="text/javascript">
+            //JS
+            const app = new Vue({
+                el: '#lugardetrabajo',
+                data: {
+                    bpi: []
+                },
+                beforeMount() {
+                    fetch('https://api.coindesk.com/v1/bpi/currentprice.json')
+                    .then(res => {
+                        return res.json();
+                    })
+                    .then(data => {
+                        let dat = [];
+                        for (const bp in data.bpi) {
+                            dat.push(data.bpi[bp]);
+                        }
+                        this.bpi = dat;
+                    });
+                }
+            });
+            </script>
+    </body>
+</html>
